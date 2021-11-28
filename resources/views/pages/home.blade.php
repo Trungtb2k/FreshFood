@@ -11,11 +11,6 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="{{asset('public/Frontend/images/cat-2.jpg')}}">
-                            <h5><a href="#">Dried Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="{{asset('public/Frontend/images/cat-3.jpg')}}">
                             <h5><a href="#">Vegetables</a></h5>
                         </div>
@@ -27,7 +22,7 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="{{asset('public/Frontend/images/cat-5.jpg')}}">
-                            <h5><a href="#">drink fruits</a></h5>
+                            <h5><a href="#">Fresh Meat</a></h5>
                         </div>
                     </div>
                 </div>
@@ -48,8 +43,8 @@
                     <div class="featured__controls">
                         <ul>
                             <li class="active" data-filter="*">All</li>
-                            @foreach($category as $key => $cate)
-                               <li><a href="{{URL::to('/danh-muc-san-pham/'.$cate->category_id)}}">{{$cate->category_name}}</li>
+                            @foreach($category1 as $key => $cate)
+                               <li><a href="{{URL::to('/category-product/'.$cate->category_id)}}">{{$cate->category_name}}</li>
                            @endforeach
                         </ul>
                     </div>
@@ -70,13 +65,13 @@
 
                         <div class="featured__item__pic set-bg" data-setbg="{{URL::to('public/Upload/Product/'.$product->product_image)}}">
                             <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a><i class="fa fa-heart"></i></a></li>
+                                <li><a><i class="fa fa-retweet"></i></a></li>
                                 <li><a><i type="button" data-id_product="{{$product->product_id}}" class="fa fa-shopping-cart add-to-cart" name="add-to-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="{{URL::to('/Chi-tiet-san-pham/'.$product->product_id)}}">{{$product->product_name}}</a></h6>
+                            <h6><a href="{{URL::to('/product-details/'.$product->product_id)}}">{{$product->product_name}}</a></h6>
                             <h5>${{$product->product_price}}</h5>
                         </div>
                         </form>
@@ -84,7 +79,6 @@
                 </div>
                 @endforeach
             </div>
-
         </div>
     </section>
     <!-- Featured Section End -->

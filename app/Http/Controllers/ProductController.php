@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 class ProductController extends Controller
@@ -26,8 +27,8 @@ class ProductController extends Controller
 
     public function all_product(){
         $this->AuthLogin();
-        $all_product = DB::table('tbl_product')
-        ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')->get();
+        $all_product = Product::orderBy('product_id','ASC')
+        ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')->paginate(9);
         $manager_product = view('admin.all_product')->with('all_product',$all_product);
         return view('admin_layout')->with('admin.all_product',$manager_product);
     }
@@ -125,5 +126,25 @@ class ProductController extends Controller
 
         return view('pages.Product.show_details')->with('category',$cate_product)
         ->with('product_details',$details_product)->with('related',$related_product);
+    }
+
+    public function show_shop(){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderBy('category_id','desc')->get();
+       // $all_product = DB::table('tbl_product')->Paginate(6);
+       $all_product = Product::orderBy('product_id','ASC')->simplePaginate(9);
+        if(isset($_GET['sort_by'])){
+            $sort_by = $_GET['sort_by'];
+            if($sort_by=='kytu_za'){
+                $all_product = Product::orderBy('product_name','DESC')->simplePaginate(9);
+
+            }elseif($sort_by=='kytu_az'){
+                $all_product = Product::orderBy('product_name','ASC')->simplePaginate(9);
+            }elseif($sort_by=='tang_dan'){
+                $all_product = Product::orderBy('product_price','ASC')->simplePaginate(9);
+            }elseif($sort_by=='giam_dan'){
+                $all_product = Product::orderBy('product_price','DESC')->simplePaginate(9);
+            }
+        }
+        return view('pages.shop.show_shop')->with('category',$cate_product)->with('product',$all_product);
     }
 }

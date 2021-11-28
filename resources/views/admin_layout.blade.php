@@ -26,6 +26,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/BackEnd/js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('public/BackEnd/js/raphael-min.js')}}"></script>
 <script src="{{asset('public/BackEnd/js/morris.js')}}"></script>
+<script src="{{asset('public/BackEnd/ckeditor/ckeditor.js')}}"></script>
+<script >
+    $( document ).ready( function() {
+	CKEDITOR.replace( 'ckeditor1' );
+    CKEDITOR.replace( 'ckeditor' );
+});
+</script>
 </head>
 <body>
 <section id="container">
@@ -59,7 +66,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <span class="username">
                     <?php
 
-use Illuminate\Support\Facades\Session;
+                    use Illuminate\Support\Facades\Session;
 
                         $name = Session::get('admin_name');
                         if($name){
@@ -93,6 +100,16 @@ use Illuminate\Support\Facades\Session;
                         <i class="fa fa-dashboard"></i>
                         <span>Tổng quan</span>
                     </a>
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{URL::to('/manage-order')}}">Quản lý đơn hàng</a></li>
+                    </ul>
                 </li>
 
                 <li class="sub-menu">

@@ -7,13 +7,10 @@
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
-							<span>
-								<input type="checkbox" class="checkbox">
-								Keep me signed in
-							</span>
+						<form action="{{URL::to('/login-customer')}}" method="POST">
+                        {{csrf_field()}}
+							<input type="email" name="email_account" placeholder="Email Address" />
+                            <input type="password" name="password_account" placeholder="Password" />
 							<button type="submit" class="btn btn-default">Login</button>
 						</form>
 					</div><!--/login form-->
@@ -24,10 +21,12 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name"/>
-							<input type="email" placeholder="Email Address"/>
-							<input type="password" placeholder="Password"/>
+						<form action="{{URL::to('/add-customer')}}" method="POST">
+                            {{csrf_field()}}
+							<input type="text" name="customer_name" placeholder="Name"/>
+							<input type="email" name="customer_email" placeholder="Email Address"/>
+							<input type="password" name="customer_password" placeholder="Password"/>
+                            <input type="text" name="customer_phone" placeholder="Phone Number"/>
 							<button type="submit" class="btn btn-default">Signup</button>
 						</form>
 					</div><!--/sign up form-->
@@ -36,4 +35,4 @@
 		</div>
 	</section><!--/form-->
 
-@endsection
+    @endsection

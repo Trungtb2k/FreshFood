@@ -22,6 +22,11 @@
     <link rel="stylesheet" href="{{asset('public/Frontend/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('public/Frontend/css/style.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('public/Frontend/css/sweetaleart.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('public/Frontend/css/main.css')}}" type="text/css">
+
+    <!-- -->
+
+
 </head>
 
 <body>
@@ -63,14 +68,12 @@
                 <li><a href="./shop-grid.html">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
+
+                        <li><a href="{{URL::to('/show-cart')}}">Shoping Cart</a></li>
+                        <li><a href="{{URL::to('/checkout')}}">Check Out</a></li>
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="{{URL::to('/contact')}}">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -82,7 +85,7 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i class="fa fa-envelope"></i>trung071020@gmail.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -97,7 +100,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                                <li><i class="fa fa-envelope"></i> trung071020@gmail.com</li>
                                 <li>Free Shipping for all Order of $99</li>
                             </ul>
                         </div>
@@ -120,7 +123,20 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
+                                <?php
+                                    use Illuminate\Support\Facades\Session;
+                                    $customer_id = Session::get('customer_id');
+                                    if($customer_id!=Null){
+
+                                ?>
+                                <a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-user"></i> Logout</a>
+                                <?php
+                                    }else{
+                                ?>
+                                <a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i> Login</a>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -138,27 +154,26 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="{{URL::to('/')}}">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="{{URL::to('/show-shop')}}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
+
                                     <li><a href="{{URL::to('/show-cart')}}">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    <li><a href="{{URL::to('/checkout')}}">Check Out</a></li>
+
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="{{URL::to('/contact')}}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                            <li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+
                     </div>
                 </div>
             </div>
@@ -181,22 +196,22 @@
                         </div>
                         <ul>
                            @foreach($category as $key => $cate)
-                               <li><a href="{{URL::to('/danh-muc-san-pham/'.$cate->category_id)}}">{{$cate->category_name}}</li>
+                               <li><a href="{{URL::to('/category-product/'.$cate->category_id)}}">{{$cate->category_name}}</li></a>
                            @endforeach
-
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="#">
+                        <form action="{{URL::to('/Search')}}" method="POST">
+                                {{csrf_field()}}
                                 <div class="hero__search__categories">
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
                                 </div>
-                                <input type="text" placeholder="What do you need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
+                                <input type="text" name="keywords_submit" placeholder="What do you need?">
+                                <button type="submit" name="seach_items" class="site-btn">SEARCH</button>
                             </form>
                         </div>
                         <div class="hero__search__phone">
@@ -204,7 +219,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5>+84 969.719.528</h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>
@@ -237,9 +252,9 @@
                             <a href="./index.html"><img src="{{asset('public/Frontend/images/logo.png')}}" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
+                            <li>Address: No. 3 Cau Giay Street</li>
+                            <li>Phone: +84 0969.719.528</li>
+                            <li>Email: trung071020@gmail.com</li>
                         </ul>
                     </div>
                 </div>
@@ -322,12 +337,12 @@
                         ,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token},
                     success:function(data){
                         swal({
-                                title: "Đã thêm sản phẩm vào giỏ hàng",
-                                text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                                title: "Product added to cart",
+                                text: "You can continue to purchase or go to the shopping cart to proceed with the payment",
                                 showCancelButton: true,
-                                cancelButtonText: "Xem tiếp",
+                                cancelButtonText: "Continue",
                                 confirmButtonClass: "btn-success",
-                                confirmButtonText: "Đi đến giỏ hàng",
+                                confirmButtonText: "Go to cart",
                                 closeOnConfirm: false
                             },
                             function() {
@@ -340,6 +355,16 @@
                 });
             });
         });
+    </script>
+
+    <script type="text/javascript">
+         $("#sort").on("change",function(){
+             var url  = $(this).val();
+             if(url){
+                 window.location = url;
+             }
+             return false;
+         });
     </script>
 
 </body>

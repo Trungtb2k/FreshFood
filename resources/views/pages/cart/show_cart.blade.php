@@ -7,6 +7,12 @@
         <div class="container">
         <form action="{{url('/update-cart')}}" method="POST">
             {{csrf_field()}}
+            <?php
+
+                    use Gloudemans\Shoppingcart\Facades\Cart;
+
+                    $content = Cart::content();
+            ?>
             <div class="row">
                 <div class="col-lg-12">
 
@@ -67,21 +73,9 @@
                         <input type="submit" value="Update Cart" name="update_qty" class="primary-btn cart-btn cart-btn-right">
                     </div>
                 </div>
+                <div class="col-lg-3">
 
-
-                <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" name="coupon" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn check_coupon">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
-                </form>
-
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
@@ -89,7 +83,21 @@
                             <li>Subtotal <span>{{$total}}</span></li>
                             <li>Total <span>{{$total}}</span></li>
                         </ul>
-                        <a href="{{URL::to('/login-checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <?php
+                                    use Illuminate\Support\Facades\Session;
+                                    $customer_id = Session::get('customer_id');
+                                    if($customer_id!=Null){
+
+                                ?>
+                                 <a href="{{URL::to('/checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                                <?php
+                                    }else{
+                                ?>
+                                 <a href="{{URL::to('/login-checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                                <?php
+                                    }
+                                ?>
+
                     </div>
                 </div>
 

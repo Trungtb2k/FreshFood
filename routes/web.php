@@ -20,13 +20,14 @@ use App\Http\Controllers\CheckoutController;
 */
 // Front End
 Route::get('/', [HomeController::class,'index']);
-Route::get('/trang-chu', [HomeController::class,'index']);
+Route::get('/Home', [HomeController::class,'index']);
+Route::post('/Search', [HomeController::class,'search']);
 
 //Danh muc san pham trang chu
-Route::get('/danh-muc-san-pham/{category_id}', [CategoryProduct::class,'show_category_home']);
+Route::get('/category-product/{category_id}', [CategoryProduct::class,'show_category_home']);
 
 //Chi tiet san pham
-Route::get('/Chi-tiet-san-pham/{product_id}', [ProductController::class,'details_product']);
+Route::get('/product-details/{product_id}', [ProductController::class,'details_product']);
 
 
 // Back end
@@ -68,7 +69,20 @@ Route::get('/del-product/{session_id}', [CartController::class,'delete_product']
 
 //Checkout
 Route::get('/login-checkout', [CheckoutController::class,'login_checkout']);
+Route::get('/logout-checkout', [CheckoutController::class,'logout_checkout']);
+Route::post('/add-customer', [CheckoutController::class,'add_customer']);
+Route::post('/login-customer', [CheckoutController::class,'login_customer']);
+Route::get('/checkout', [CheckoutController::class,'checkout']);
+Route::post('/save-checkout-customer', [CheckoutController::class,'save_checkout_customer']);
+
+//Order
+Route::get('/manage-order', [CheckoutController::class,'manage_order']);
+Route::get('/view-order/{orderId}', [CheckoutController::class,'view_order']);
+Route::get('/delete-order/{orderId}', [CheckoutController::class,'delete_order']);
 
 
+//Shop
+Route::get('/show-shop', [ProductController::class,'show_shop']);
 
-
+//Contact
+Route::get('/contact', [HomeController::class,'show_contact']);

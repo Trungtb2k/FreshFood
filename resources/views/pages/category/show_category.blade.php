@@ -13,8 +13,8 @@
                     <div class="featured__controls">
                         <ul>
                             <li><a href="{{URL::to('/')}}">All</li>
-                            @foreach($category as $key => $cate)
-                               <li><a href="{{URL::to('/danh-muc-san-pham/'.$cate->category_id)}}">{{$cate->category_name}}</li>
+                            @foreach($category1 as $key => $cate)
+                               <li><a href="{{URL::to('/category-product/'.$cate->category_id)}}">{{$cate->category_name}}</li>
                            @endforeach
                         </ul>
                     </div>
@@ -33,7 +33,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="{{URL::to('/Chi-tiet-san-pham/'.$product->product_id)}}">{{$product->product_name}}</a></h6>
+                            <h6><a href="{{URL::to('/product-details/'.$product->product_id)}}">{{$product->product_name}}</a></h6>
                             <h5>${{$product->product_price}}</h5>
                         </div>
                     </div>
